@@ -91,7 +91,10 @@ El sistema usa **JWT**.
 El token debe enviarse en los endpoints protegidos mediante el header:
 
 ```
-Authorization: Bearer <token>
+| Key          | Value           |
+|--------------|-----------------|
+| Content-Type | application/json|
+| Authorization| Bearer <token>  |
 ```
 
 ---
