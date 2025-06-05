@@ -1,10 +1,133 @@
-## Instrucciones para ejecutar el backend
+# 🩺 Sistema de Agendamiento de Citas Médicas
 
-1. Clonar el repositorio
-2. Ejecutar `npm install`
-3. Crear un archivo `.env` con el siguiente contenido:
-    PORT=3000
-    MONGO_URI=mongodb://localhost:27017/diplomado_dw_2025
+Este proyecto es una **API RESTful** desarrollada con **Node.js**, **Express** y **MongoDB** para gestionar un sistema de agendamiento de citas médicas.  
+El **administrador** puede crear citas disponibles, y los **usuarios autenticados** pueden asignarse una, siempre y cuando no tengan otra en la misma fecha y hora.
 
-4. Ejecutar `node app.js`
-5. Acceder a `http://localhost:3000/`
+---
+
+## Tecnologías Utilizadas
+
+- **Node.js**
+- **Express.js**
+- **MongoDB** + **Mongoose**
+- **JWT** (`jsonwebtoken`)
+- **bcryptjs**
+- **express-validator**
+- **dotenv**
+- **CORS**
+
+---
+
+## Estructura del Proyecto
+
+```
+/backend
+│
+├── app.js
+├── .env
+├── package.json
+├── README.md
+│
+├── models/
+│   ├── Usuario.js
+│   └── Cita.js
+│
+├── controllers/
+│   ├── auth.controller.js
+│   ├── usuarios.controller.js
+│   └── citas.controller.js
+│
+├── routes/
+│   ├── auth.routes.js
+│   ├── usuarios.routes.js
+│   └── citas.routes.js
+│
+├── middlewares/
+│   ├── auth.middleware.js
+│   ├── rol.middleware.js
+│   └── validaciones/
+│       ├── auth.validator.js
+│       ├── cita.validator.js
+│       └── validarCampos.js
+```
+
+---
+
+## Variables de Entorno (`.env`)
+
+Crea el archivo `.env` y configura las siguientes variables:
+
+```env
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/citas_medicas_db
+JWT_SECRET=una_clave_secreta_segura
+```
+
+---
+
+## Cómo ejecutar el proyecto
+
+1. **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/tuusuario/nombre-proyecto-backend-300h.git
+    cd nombre-proyecto-backend-300h
+    ```
+
+2. **Instala las dependencias:**
+    ```bash
+    npm install
+    ```
+
+3. **Levanta el servidor:**
+    ```bash
+    node app.js
+    ```
+
+---
+
+## Autenticación
+
+El sistema usa **JWT**.  
+El token debe enviarse en los endpoints protegidos mediante el header:
+
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## Roles
+
+- **admin:** puede crear citas médicas
+- **usuario:** puede ver y asignarse citas
+
+---
+
+## Endpoints de la API
+
+| Método | Ruta                         | Descripción                                 | Autenticación | Rol Requerido |
+|--------|------------------------------|---------------------------------------------|:-------------:|:-------------:|
+| POST   | `/api/auth/registro`         | Registrar nuevo usuario                     | NO            | -             |
+| POST   | `/api/auth/login`            | Iniciar sesión y obtener token JWT          | NO            | -             |
+| GET    | `/api/usuarios`              | Obtener todos los usuarios                  | SI            | admin         |
+| GET    | `/api/citas`                 | Ver citas disponibles                       | SI            | usuario       |
+| POST   | `/api/citas`                 | Crear nueva cita médica                     | SI            | admin         |
+| POST   | `/api/citas/asignar/:id`     | Asignar una cita al usuario autenticado     | SI            | usuario       |
+
+---
+
+## ✅ Reglas del sistema
+
+- Un usuario **no puede asignarse dos citas en la misma fecha y hora**.
+- Solo los usuarios con rol **admin** pueden crear citas disponibles.
+- **Todos los datos se validan** antes de procesar (formato, campos requeridos, etc).
+
+---
+
+## 📦 Buenas Prácticas
+
+- Código modularizado (**MVC**)
+- Separación de rutas, controladores, modelos y middlewares
+- Validación de entrada con **express-validator**
+- Seguridad con **JWT** + **bcrypt**
+- `.env` seguro y fuera del control de versiones (`.gitignore`)
