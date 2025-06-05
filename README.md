@@ -112,7 +112,11 @@ El token debe enviarse en los endpoints protegidos mediante el header:
 | POST   | `/api/auth/login`            | Iniciar sesión y obtener token JWT          | NO            | -             |
 | GET    | `/api/usuarios`              | Obtener todos los usuarios                  | SI            | admin         |
 | GET    | `/api/citas`                 | Ver citas disponibles                       | SI            | usuario       |
+| GET    | `/api/citas/mis-citas`       | Ver las citas asignadas por el usuario      | SI            | usuario       |
+| DELETE | `/api/citas/mis-citas/:id`   | Elimina la asignación de la cita al usuario | SI            | usuario       |
 | POST   | `/api/citas`                 | Crear nueva cita médica                     | SI            | admin         |
+| DELETE | `/api/citas/:id`             | Elimina la cita disponible o asignada       | SI            | admin         |
+| GET    | `/api/citas/admin`           | Ver todas las listas                        | SI            | admin         |
 | POST   | `/api/citas/asignar/:id`     | Asignar una cita al usuario autenticado     | SI            | usuario       |
 
 ---

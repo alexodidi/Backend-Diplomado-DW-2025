@@ -14,8 +14,12 @@ const validarCampos = require('../middlewares/validaciones/validarCampos');
 
 router.get('/', verificarToken, obtenerCitasDisponibles);
 router.post('/asignar/:id', verificarToken, soloRol('usuario'), asignarCita);
+router.get('/mis-citas', verificarToken, soloRol('usuario'), getCitasAsignadasAlUsuario);
+router.delete('/mis-citas/:id', verificarToken, soloRol('usuario'), desasignarCita);
 
-// Solo admin puede crear citas
+// Solo admin puede crear y eliminar citas
 router.post('/', verificarToken, soloRol('admin'), validarCrearCita, validarCampos, crearCita);
+router.delete('/:id', verificarToken, soloRol('admin'), eliminarCita);
+router.get('/admin', verificarToken, soloRol('admin'), obtenerTodasLasCitas);
 
 module.exports = router;
