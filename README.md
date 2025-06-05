@@ -90,12 +90,10 @@ JWT_SECRET=una_clave_secreta_segura
 El sistema usa **JWT**.  
 El token debe enviarse en los endpoints protegidos mediante el header:
 
-```
 | Key          | Value           |
 |--------------|-----------------|
 | Content-Type | application/json|
 | Authorization| Bearer <token>  |
-```
 
 ---
 
