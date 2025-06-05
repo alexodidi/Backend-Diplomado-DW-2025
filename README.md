@@ -69,8 +69,8 @@ JWT_SECRET=una_clave_secreta_segura
 
 1. **Clona el repositorio:**
     ```bash
-    git clone https://github.com/tuusuario/nombre-proyecto-backend-300h.git
-    cd nombre-proyecto-backend-300h
+    git clone https://github.com/alexodidi/Backend-Diplomado-DW-2025.git
+    cd Backend-Diplomado-DW-2025.git
     ```
 
 2. **Instala las dependencias:**
