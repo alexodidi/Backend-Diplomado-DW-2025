@@ -24,15 +24,36 @@ const obtenerCitasDisponibles = async (req, res) => {
 
 // Usuario: asignarse a una cita
 const asignarCita = async (req, res) => {
-  const { id } = req.params;
-  const cita = await Cita.findById(id);
-  if (!cita || cita.usuario) {
-    return res.status(404).json({ error: 'Cita no disponible' });
-  }
+  try {
+    const { id } = req.params;
+    const usuarioId = req.usuario._id;
 
-  cita.usuario = req.usuario._id;
-  await cita.save();
-  res.json({ mensaje: 'Cita asignada correctamente', cita });
+    const citaAAsignar = await Cita.findById(id);
+    if (!citaAAsignar || citaAAsignar.usuario) {
+      return res.status(404).json({ error: 'Cita no disponible o ya asignada' });
+    }
+
+    // Validar si ya tiene una cita en la misma fecha y hora
+    const conflicto = await Cita.findOne({
+      usuario: usuarioId,
+      fecha: citaAAsignar.fecha
+    });
+
+    if (conflicto) {
+      return res.status(409).json({
+        error: 'Ya tienes una cita asignada en esta fecha y hora'
+      });
+    }
+
+    // Asignar cita
+    citaAAsignar.usuario = usuarioId;
+    await citaAAsignar.save();
+
+    res.json({ mensaje: 'Cita asignada correctamente', cita: citaAAsignar });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al asignar cita' });
+  }
 };
 
 module.exports = { crearCita, obtenerCitasDisponibles, asignarCita };
