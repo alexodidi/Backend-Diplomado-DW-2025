@@ -1,4 +1,4 @@
-# 🩺 Sistema de Agendamiento de Citas Médicas
+# Sistema de Agendamiento de Citas Médicas
 
 Este proyecto es una **API RESTful** desarrollada con **Node.js**, **Express** y **MongoDB** para gestionar un sistema de agendamiento de citas médicas.  
 El **administrador** puede crear citas disponibles, y los **usuarios autenticados** pueden asignarse una, siempre y cuando no tengan otra en la misma fecha y hora.
@@ -116,7 +116,7 @@ Authorization: Bearer <token>
 
 ---
 
-## ✅ Reglas del sistema
+## Reglas del sistema
 
 - Un usuario **no puede asignarse dos citas en la misma fecha y hora**.
 - Solo los usuarios con rol **admin** pueden crear citas disponibles.
@@ -124,7 +124,7 @@ Authorization: Bearer <token>
 
 ---
 
-## 📦 Buenas Prácticas
+## Buenas Prácticas
 
 - Código modularizado (**MVC**)
 - Separación de rutas, controladores, modelos y middlewares
