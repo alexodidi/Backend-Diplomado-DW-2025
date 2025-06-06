@@ -4,7 +4,11 @@ const router = express.Router();
 const {
   crearCita,
   obtenerCitasDisponibles,
-  asignarCita
+  asignarCita,
+  getCitasAsignadasAlUsuario,
+  desasignarCita,
+  eliminarCita,
+  obtenerTodasLasCitas
 } = require('../controllers/citas.controller');
 
 const verificarToken = require('../middlewares/auth.middleware');
@@ -12,10 +16,10 @@ const soloRol = require('../middlewares/rol.middleware');
 const { validarCrearCita } = require('../middlewares/validaciones/cita.validator');
 const validarCampos = require('../middlewares/validaciones/validarCampos');
 
-router.get('/', verificarToken, obtenerCitasDisponibles);
-router.post('/asignar/:id', verificarToken, soloRol('usuario'), asignarCita);
-router.get('/mis-citas', verificarToken, soloRol('usuario'), getCitasAsignadasAlUsuario);
-router.delete('/mis-citas/:id', verificarToken, soloRol('usuario'), desasignarCita);
+router.get('/', verificarToken, soloRol('usuario', 'admin'), obtenerCitasDisponibles);
+router.post('/asignar/:id', verificarToken, soloRol('usuario', 'admin'), asignarCita);
+router.get('/mis-citas', verificarToken, soloRol('usuario', 'admin'), getCitasAsignadasAlUsuario);
+router.delete('/mis-citas/:id', verificarToken, soloRol('usuario', 'admin'), desasignarCita);
 
 // Solo admin puede crear y eliminar citas
 router.post('/', verificarToken, soloRol('admin'), validarCrearCita, validarCampos, crearCita);
